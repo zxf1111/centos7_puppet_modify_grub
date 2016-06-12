@@ -1,0 +1,15 @@
+#!/bin/sh
+exec tail -n +3 $0
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+
+menuentry 'CentOS Linux 7 (Render)' --class rhel fedora --class gnu-linux --class gnu --class os --unrestricted $menuentry_id_option 'gnulinux-<%= @kernelrelease %>-advanced-0ddd3d86-b3f7-45e3-be73-98e45df8976b' {
+        load_video
+        set gfxpayload=keep
+        insmod gzio
+        insmod part_msdos
+        insmod xfs
+        linux16 /vmlinuz-<%= @kernelrelease %> root=<%= @rootdir %> ro rd.lvm.lv=centos/swap net.ifnames=0 rd.shell=0 crashkernel=auto facts rd.lvm.lv=centos/root system_class=workstation biosdevname=0 rhgb quiet systemd.debug LANG=en_US.UTF-8 3
+        initrd16 /initramfs-<%= @kernelrelease %>.img
+}
